@@ -11,7 +11,7 @@ Prom CLI lists multiple NFTs on the marketplace.
 #### Using `npx`
 
 ```sh
-npx @prom-io/cli
+npx @prom-io/cli@latest
 ```
 
 ```
