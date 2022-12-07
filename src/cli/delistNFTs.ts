@@ -75,7 +75,7 @@ export const delistNFTs = async (
 
     await AppDataSource.createQueryBuilder()
       .update(NFT)
-      .set({ listed: false })
+      .set({ listed: false, tx: null })
       .where({ tx: transaction.id })
       .execute();
   }

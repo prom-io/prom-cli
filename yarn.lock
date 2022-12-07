@@ -7326,6 +7326,11 @@ rlp@^2.0.0, rlp@^2.2.1, rlp@^2.2.2, rlp@^2.2.3, rlp@^2.2.4:
   dependencies:
     bn.js "^5.2.0"
 
+rollup-plugin-bin@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-bin/-/rollup-plugin-bin-1.0.0.tgz#adc83ad2f3bb209d497dea406f0a46864fbf2e85"
+  integrity sha512-Cd/kYRCBC+aWfDKa/9b+C3NucMujGKTynqgrZ5VtwXScL9CIQxXkLO1lw74J/q06pyaK92pJNlU5qWmqu5eguQ==
+
 rollup-plugin-node-resolve@^5.2.0:
   version "5.2.0"
   resolved "https://registry.npmjs.org/rollup-plugin-node-resolve/-/rollup-plugin-node-resolve-5.2.0.tgz"

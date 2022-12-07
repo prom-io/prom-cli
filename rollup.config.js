@@ -2,6 +2,7 @@ import alias from "@rollup/plugin-alias";
 import hq from "alias-hq";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import swc from "rollup-plugin-swc3";
+import bin from "rollup-plugin-bin";
 
 export default [
   {
@@ -13,10 +14,11 @@ export default [
         entries: hq.get("rollup"),
       }),
       swc({ sourceMaps: false }),
+      bin(),
     ],
     output: [
       {
-        file: `dist/index.js`,
+        file: `bin/index.js`,
         format: "esm",
         sourcemap: true,
       },

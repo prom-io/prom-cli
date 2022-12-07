@@ -1,3 +1,55 @@
 # Prom CLI
 
+Prom is the world's first all-in-one NFT gaming platform with a marketplace and other attractive options.
+
 Prom CLI lists multiple NFTs on the marketplace.
+
+![CLI screenshot](docs/screenshot.png)
+
+### Usage
+
+#### Using `npx`
+
+```sh
+npx @prom-io/cli
+```
+
+```
+Usage: prom-cli [options] [command]
+
+Prom CLI allows to list multiple NFTs blazing fast
+
+Options:
+  -V, --version               output the version number
+  -m --marketplace <address>  custom marketplace address
+  -r --rpc <url>              custom rpc
+  -h, --help                  display help for command
+
+Commands:
+  delist
+  clear-cache
+```
+
+##### Listing NFTs
+
+To list NFTs simply run next command and follow the instructions.
+
+```
+npx @prom-io/cli
+```
+
+##### Delisting NFTs
+
+To delist NFTs simply run next command and follow the instructions.
+
+```
+npx @prom-io/cli delist
+```
+
+#### Troubleshooting
+
+If you see message `Total NFTs to list: 0` however you're sure that there are NFTs to list run the following command
+
+```
+npx @prom-io/cli clear-cache
+```
