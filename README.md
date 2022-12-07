@@ -1,5 +1,7 @@
 # Prom CLI
 
+![npm](https://img.shields.io/npm/v/@prom-io/cli)
+
 Prom is the world's first all-in-one NFT gaming platform with a marketplace and other attractive options.
 
 Prom CLI lists multiple NFTs on the marketplace.
@@ -12,6 +14,13 @@ Prom CLI lists multiple NFTs on the marketplace.
 
 ```sh
 npx @prom-io/cli@latest
+```
+
+##### Installing globally
+
+```sh
+npm i -g @prom-io/cli
+prom-cli --version
 ```
 
 ```
