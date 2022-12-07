@@ -23,6 +23,7 @@ export class Marketplace {
 
   constructor(address: string, signer: Signer) {
     this.marketplace = TradeMarketplaceABI__factory.connect(address, signer);
+    logger.debug("address", this.marketplace.address);
   }
 
   get address() {

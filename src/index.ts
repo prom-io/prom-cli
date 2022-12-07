@@ -55,7 +55,7 @@ const logger = signaleLogger.scope("main");
     const marketplaceAddress = customMarketplace || marketplaces[chainId];
     const marketplace = new Marketplace(marketplaceAddress, wallet);
 
-    await reindexNFTs(collection, wallet);
+    await reindexNFTs(marketplace, collection, wallet);
     await waitUnconfirmedTxns();
     await approveCollection(collection, marketplace, wallet);
 
@@ -87,7 +87,7 @@ const logger = signaleLogger.scope("main");
     const marketplaceAddress = customMarketplace || marketplaces[chainId];
     const marketplace = new Marketplace(marketplaceAddress, wallet);
 
-    await reindexNFTs(collection, wallet);
+    await reindexNFTs(marketplace, collection, wallet);
     await waitUnconfirmedTxns(false);
     await approveCollection(collection, marketplace, wallet);
 

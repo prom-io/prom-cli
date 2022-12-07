@@ -15,7 +15,11 @@ export const delistNFTs = async (
     where: { listed: true },
   });
 
+  logger.debug("NFTs in cache", nfts);
+
   const nftsToDelist: typeof nfts = [];
+
+  const spinner = ora("Validating NFTs on blockchain...").start();
 
   for (const nft of nfts) {
     const isListed = await marketplace.isListed({
@@ -38,6 +42,8 @@ export const delistNFTs = async (
       nftsToDelist.push(nft);
     }
   }
+
+  spinner.succeed();
 
   logger.info(`Total NFTs to delist: ${nftsToDelist.length}`);
 

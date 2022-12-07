@@ -13,6 +13,13 @@ export const fetchNFTs = async (
           erc721Tokens_${chainId}(where: $where, first: $first, skip: $skip) {
             id
             identifier
+
+            nftById {
+              tradeListing {
+                published
+                contract
+              }
+            }
           }
         }
             `,
@@ -30,5 +37,11 @@ export const fetchNFTs = async (
     | {
         id: string;
         identifier: string;
+        nftById: {
+          tradeListing?: {
+            published: boolean;
+            contract: string;
+          }[];
+        };
       }[];
 };

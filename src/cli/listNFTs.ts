@@ -27,6 +27,8 @@ export const listNFTs = async (
 
   const nftsToList: typeof nfts = [];
 
+  const spinner = ora("Validating NFTs on blockchain...").start();
+
   for (const nft of nfts) {
     const isListed = await marketplace.isListed({
       nftAddress: nft.address,
@@ -48,6 +50,8 @@ export const listNFTs = async (
       nftsToList.push(nft);
     }
   }
+
+  spinner.succeed();
 
   signale.info(`Total NFTs to list: ${nftsToList.length}`);
 
