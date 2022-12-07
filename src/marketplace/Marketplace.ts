@@ -64,6 +64,23 @@ export class Marketplace {
     });
   }
 
+  async multicallCancel(assets: Asset[]) {
+    const args = [
+      assets.map(it => it.nftAddress),
+      assets.map(it => it.tokenId),
+    ] as const;
+
+    await this.marketplace.estimateGas.multicallCancel(...args);
+
+    return this.marketplace.multicallCancel(...args, {
+      type:
+        (await this.marketplace.provider.getNetwork()).chainId ===
+        ChainId.Polygon
+          ? 1
+          : 2,
+    });
+  }
+
   async isListed(asset: Asset) {
     logger.debug("isListed args", [
       asset.nftAddress,

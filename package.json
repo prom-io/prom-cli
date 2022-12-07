@@ -1,5 +1,5 @@
 {
-  "name": "prom-list-cli",
+  "name": "@prom-io/cli",
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",

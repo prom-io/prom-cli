@@ -4,7 +4,7 @@ import { NFT, Transaction } from "@/db/entities";
 import ora from "ora";
 import { IsNull, Not } from "typeorm";
 
-export const waitUnconfirmedTxns = async () => {
+export const waitUnconfirmedTxns = async (listed = true) => {
   const [nfts, total] = await AppDataSource.manager.findAndCount(NFT, {
     where: { listed: false, tx: Not(IsNull()) },
     relations: ["tx"],
@@ -23,7 +23,7 @@ export const waitUnconfirmedTxns = async () => {
 
     await AppDataSource.createQueryBuilder()
       .update(NFT)
-      .set({ listed: true })
+      .set({ listed })
       .where({ tx: tx.hash })
       .execute();
   }

@@ -2,6 +2,7 @@ import {
   approveCollection,
   getUserInput,
   listNFTs,
+  listQuestions,
   reindexNFTs,
   waitUnconfirmedTxns,
 } from "@/cli";
@@ -13,6 +14,7 @@ import { ethers } from "ethers";
 import ora from "ora";
 import "reflect-metadata";
 import fs from "fs";
+import { delistNFTs } from "@/cli/delistNFTs";
 
 const app = new Command();
 
@@ -31,7 +33,7 @@ const logger = signaleLogger.scope("main");
   app.action(async () => {
     const { marketplace: customMarketplace } = app.opts();
 
-    const userInput = await getUserInput();
+    const userInput = await getUserInput(listQuestions);
 
     const {
       chainId: chainIdChoice,
@@ -62,6 +64,34 @@ const logger = signaleLogger.scope("main");
       chainId,
       price,
     });
+  });
+
+  app.command("delist").action(async () => {
+    const { marketplace: customMarketplace } = app.opts();
+
+    const userInput = await getUserInput();
+
+    const {
+      chainId: chainIdChoice,
+      collection,
+      privateKey,
+      customChainId,
+    } = userInput;
+
+    const chainId = (customChainId || chainIdChoice) as unknown as ChainId;
+
+    const wallet = new ethers.Wallet(privateKey, providers[chainId]);
+
+    logger.info("Using wallet", wallet.address);
+
+    const marketplaceAddress = customMarketplace || marketplaces[chainId];
+    const marketplace = new Marketplace(marketplaceAddress, wallet);
+
+    await reindexNFTs(collection, wallet);
+    await waitUnconfirmedTxns(false);
+    await approveCollection(collection, marketplace, wallet);
+
+    await delistNFTs(marketplace, chainId);
   });
 
   app.command("clear-cache").action(async () => {
