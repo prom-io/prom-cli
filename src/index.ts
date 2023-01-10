@@ -20,7 +20,7 @@ const app = new Command();
 
 app.name("prom-cli");
 app.description("Prom CLI allows to list multiple NFTs blazing fast");
-app.version("1.0.4");
+app.version("1.0.6");
 
 app.option("-m --marketplace <address>", "custom marketplace address");
 app.option("-r --rpc <url>", "custom rpc");

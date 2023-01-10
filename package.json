@@ -1,6 +1,6 @@
 {
   "name": "@prom-io/cli",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "main": "bin/index.js",
   "license": "MIT",
   "type": "module",
@@ -13,6 +13,7 @@
   "scripts": {
     "start": "node bin/index.js",
     "build": "rimraf dist && rollup -c rollup.config.js",
+    "prepublish": "npm run build",
     "test": "NODE_ENV=test ts-mocha --paths -p tsconfig.test.json",
     "typechain": "typechain --target=ethers-v5 --out-dir  src/contracts ./src/contracts/abis/**/*.json"
   },
