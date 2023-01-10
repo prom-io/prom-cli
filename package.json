@@ -1,6 +1,6 @@
 {
   "name": "@prom-io/cli",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "bin/index.js",
   "license": "MIT",
   "type": "module",
