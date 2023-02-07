@@ -3,7 +3,7 @@ import signale from "signale";
 import types from "signale/types.js";
 
 export const signaleLogger = new signale.Signale({
-  logLevel: process.env.LOG_LEVEL || "error",
+  logLevel: process.env.LOG_LEVEL || "warn",
   types: {
     ...types,
     info: {

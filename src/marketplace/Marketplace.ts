@@ -18,10 +18,22 @@ export type MulticallListOptions = {
 
 const logger = signaleLogger.scope("Marketplace");
 
+type MarketplaceOptions = {
+  maxFee?: number;
+  maxPriorityFee?: number;
+  speed?: "fastest" | "fast" | "medium" | "slow";
+};
+
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
 export class Marketplace {
   private readonly marketplace: TradeMarketplaceABI;
 
-  constructor(address: string, signer: Signer) {
+  constructor(
+    address: string,
+    signer: Signer,
+    private readonly options?: MarketplaceOptions
+  ) {
     this.marketplace = TradeMarketplaceABI__factory.connect(address, signer);
     logger.debug("address", this.marketplace.address);
   }
@@ -57,9 +69,9 @@ export class Marketplace {
     await this.marketplace.estimateGas.multicallList(...args);
 
     return this.marketplace.multicallList(...args, {
+      ...(await this.getGasOptions()),
       type:
-        (await this.marketplace.provider.getNetwork()).chainId ===
-        ChainId.Polygon
+        (await this.marketplace.provider.getNetwork()).chainId === ChainId.BSC
           ? 1
           : 2,
     });
@@ -74,9 +86,9 @@ export class Marketplace {
     await this.marketplace.estimateGas.multicallCancel(...args);
 
     return this.marketplace.multicallCancel(...args, {
+      ...(await this.getGasOptions()),
       type:
-        (await this.marketplace.provider.getNetwork()).chainId ===
-        ChainId.Polygon
+        (await this.marketplace.provider.getNetwork()).chainId === ChainId.BSC
           ? 1
           : 2,
     });
@@ -120,5 +132,64 @@ export class Marketplace {
     );
 
     return ethers.utils.parseUnits(price, decimals);
+  }
+
+  async getGasOptions(): Promise<ethers.Overrides> {
+    const chainId = (await this.marketplace.provider.getNetwork()).chainId;
+
+    try {
+      const response = await fetch(
+        `https://api.owlracle.info/v3/${chainId}/gas`
+      );
+      const data = await response.json();
+      const [slow, medium, fast, fastest] = data.speeds;
+      const speed = { slow, medium, fast, fastest }[
+        this.options?.speed ?? "medium"
+      ];
+
+      if ("gasPrice" in speed) {
+        if (this.options?.maxFee && speed.gasPrice > this.options.maxFee) {
+          throw new Error(
+            `Gas price is higher than "maxFee" option. ${speed.gasPrice} > ${this.options.maxFee}`
+          );
+        }
+
+        return {
+          gasPrice: ethers.utils.parseUnits(speed.gasPrice.toString(), "gwei"),
+        };
+      } else {
+        if (this.options?.maxFee && speed.maxFeePerGas > this.options.maxFee) {
+          throw new Error(
+            `maxFeePerGas is higher than "maxFee" option. ${speed.maxFeePerGas} > ${this.options.maxFee}`
+          );
+        }
+
+        if (
+          this.options?.maxPriorityFee &&
+          speed.maxPriorityFeePerGas > this.options.maxPriorityFee
+        ) {
+          throw new Error(
+            `maxPriorityFeePerGas is higher than "maxPriorityFee" option. ${speed.maxPriorityFeePerGas} > ${this.options.maxPriorityFee}`
+          );
+        }
+
+        return {
+          maxFeePerGas: ethers.utils.parseUnits(
+            speed.maxFeePerGas.toString(),
+            "gwei"
+          ),
+          maxPriorityFeePerGas: ethers.utils.parseUnits(
+            speed.maxPriorityFeePerGas.toString(),
+            "gwei"
+          ),
+        };
+      }
+    } catch (e: any) {
+      logger.warn(e?.message || "Failed to get gas options");
+      logger.debug(e);
+      logger.warn("Retrying in 10 seconds...");
+      await sleep(10000);
+      return this.getGasOptions();
+    }
   }
 }

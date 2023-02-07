@@ -29,4 +29,24 @@ export const paymentTokens: Partial<Record<ChainId, ERC20Token[]>> = {
       decimals: 6,
     },
   ],
+  [ChainId.BSC]: [
+    {
+      name: "Binance",
+      address: ethers.constants.AddressZero,
+      symbol: "BNB",
+      decimals: 18,
+    },
+    {
+      name: "USD Tether",
+      symbol: "USDT",
+      decimals: 6,
+      address: "0x55d398326f99059ff775485246999027b3197955",
+    },
+    {
+      name: "Binance Pegged USD",
+      symbol: "BUSD",
+      decimals: 18,
+      address: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    },
+  ],
 };

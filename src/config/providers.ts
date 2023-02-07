@@ -12,7 +12,7 @@ export const avaxProvider = new ethers.providers.JsonRpcProvider(
 );
 
 export const bscProvider = new ethers.providers.JsonRpcProvider(
-  "https://rpc.ankr.com/bsc",
+  "https://bsc-mainnet.public.blastapi.io",
   ChainId.BSC
 );
 

@@ -25,12 +25,12 @@ export const approveCollection = async (
 
   if (!isApproved) {
     spinner.start();
+
     await erc721.estimateGas.setApprovalForAll(marketplace.address, true);
     const tx = await erc721.setApprovalForAll(marketplace.address, true, {
+      ...(await marketplace.getGasOptions()),
       type:
-        (await wallet.provider.getNetwork()).chainId === ChainId.Polygon
-          ? 1
-          : 2,
+        (await wallet.provider.getNetwork()).chainId === ChainId.BSC ? 1 : 2,
     });
     await tx.wait();
     spinner.succeed();
