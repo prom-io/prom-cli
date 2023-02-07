@@ -32,6 +32,7 @@ export const approveCollection = async (
       type:
         (await wallet.provider.getNetwork()).chainId === ChainId.BSC ? 1 : 2,
     });
+
     await tx.wait();
     spinner.succeed();
   } else {

@@ -13,7 +13,14 @@ import { ethers } from "ethers";
 chai.use(solidity);
 
 describe("cli | approveCollection", () => {
-  const [wallet] = new MockProvider().getWallets();
+  const provider = new MockProvider({
+    ganacheOptions: {
+      chain: {
+        hardfork: "arrowGlacier",
+      },
+    },
+  });
+  const [wallet] = provider.getWallets();
   let erc721contract: MockContract;
 
   beforeEach(async () => {
@@ -28,6 +35,7 @@ describe("cli | approveCollection", () => {
       erc721contract.address,
       {
         address: ethers.constants.AddressZero,
+        getGasOptions: () => Promise.resolve({}),
       } as Marketplace,
       wallet
     );
@@ -42,6 +50,7 @@ describe("cli | approveCollection", () => {
       erc721contract.address,
       {
         address: ethers.constants.AddressZero,
+        getGasOptions: () => Promise.resolve({}),
       } as Marketplace,
       wallet
     );
