@@ -3,3 +3,5 @@ rollup.config.js
 docs
 tsconfig.test.json
 tsconfig.json
+.mocharc.json
+yarn-error.log  
