@@ -49,4 +49,38 @@ export const paymentTokens: Partial<Record<ChainId, ERC20Token[]>> = {
       address: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
     },
   ],
+  [ChainId.Ethereum]: [
+    {
+      name: "Ether",
+      address: ethers.constants.AddressZero,
+      symbol: "ETH",
+      decimals: 18,
+    },
+    {
+      name: "USD Tether",
+      symbol: "USDT",
+      decimals: 6,
+      address: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    },
+    {
+      name: "USD Coin",
+      symbol: "USDC",
+      decimals: 18,
+      address: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    },
+  ],
+  [ChainId.Fantom]: [
+    {
+      name: "USD Coin",
+      symbol: "USDC",
+      decimals: 6,
+      address: "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+    },
+    {
+      name: "Fantom",
+      symbol: "FTM",
+      decimals: 18,
+      address: "ethers.constants.AddressZero",
+    },
+  ],
 };
