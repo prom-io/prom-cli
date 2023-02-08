@@ -3,6 +3,7 @@ import hq from "alias-hq";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import swc from "rollup-plugin-swc3";
 import bin from "rollup-plugin-bin";
+import json from "@rollup/plugin-json";
 
 export default [
   {
@@ -15,6 +16,7 @@ export default [
       }),
       swc({ sourceMaps: false }),
       bin(),
+      json(),
     ],
     output: [
       {

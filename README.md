@@ -31,11 +31,15 @@ Prom CLI allows to list multiple NFTs blazing fast
 Options:
   -V, --version               output the version number
   -m --marketplace <address>  custom marketplace address
+  --max-fee <price>           max fee per gas (max gas price non EIP-1559 compatible chains) in GWEI
+  --max-priority-fee <price>  max priority fee per gas in GWEI
+  --speed <speed>             tx speed (fastest, fast, medium, slow) (default: "medium")
   -r --rpc <url>              custom rpc
   -h, --help                  display help for command
 
 Commands:
   delist
+  cancel-txns                 cancel pending transactions up to nonce
   clear-cache
 ```
 

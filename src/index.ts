@@ -19,12 +19,13 @@ import fs from "fs";
 import inquirer from "inquirer";
 import ora from "ora";
 import "reflect-metadata";
+import { version } from "../package.json";
 
 const app = new Command();
 
 app.name("prom-cli");
 app.description("Prom CLI allows to list multiple NFTs blazing fast");
-app.version("1.0.6");
+app.version(version);
 
 app.option("-m --marketplace <address>", "custom marketplace address");
 app.option(
