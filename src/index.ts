@@ -1,20 +1,24 @@
 import {
   approveCollection,
+  chainIdQuestion,
   getUserInput,
   listNFTs,
   listQuestions,
+  privateKeyQuestion,
   reindexNFTs,
   waitUnconfirmedTxns,
 } from "@/cli";
+import { cancelPendingTxns } from "@/cli/cancelPendingTxns";
+import { delistNFTs } from "@/cli/delistNFTs";
 import { ChainId, marketplaces, providers, signaleLogger } from "@/config";
 import { AppDataSource, dbPath } from "@/db";
 import { Marketplace } from "@/marketplace";
 import { Command } from "commander";
 import { ethers } from "ethers";
+import fs from "fs";
+import inquirer from "inquirer";
 import ora from "ora";
 import "reflect-metadata";
-import fs from "fs";
-import { delistNFTs } from "@/cli/delistNFTs";
 
 const app = new Command();
 
@@ -111,6 +115,20 @@ const logger = signaleLogger.scope("main");
 
     await delistNFTs(marketplace, chainId);
   });
+
+  app
+    .command("cancel-txns")
+    .description("cancel pending transactions up to nonce")
+    .action(async () => {
+      const { privateKey, chainId } = await inquirer.prompt<{
+        privateKey: string;
+        chainId: ChainId;
+      }>([privateKeyQuestion, chainIdQuestion]);
+
+      const wallet = new ethers.Wallet(privateKey, providers[chainId]);
+
+      await cancelPendingTxns(wallet);
+    });
 
   app.command("clear-cache").action(async () => {
     const spinner = ora("Clearing cache").start();

@@ -28,10 +28,11 @@ export const approveCollection = async (
 
     await erc721.estimateGas.setApprovalForAll(marketplace.address, true);
     const tx = await erc721.setApprovalForAll(marketplace.address, true, {
-      ...(await marketplace.getGasOptions()),
-      type:
-        (await wallet.provider.getNetwork()).chainId === ChainId.BSC ? 1 : 2,
+      ...(await marketplace.getTxOptions()),
     });
+
+    spinner.info(`Tx hash: ${tx.hash}`);
+    logger.debug("Raw tx", JSON.stringify(tx, null, 2));
 
     await tx.wait();
     spinner.succeed();

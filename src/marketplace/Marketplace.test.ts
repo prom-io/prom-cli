@@ -44,7 +44,7 @@ describe("marketplace | Marketplace", () => {
     await marketplaceContract.mock.multicallList.returns();
 
     marketplace = new Marketplace(marketplaceContract.address, wallet);
-    sinon.stub(marketplace, "getGasOptions").returns(Promise.resolve({}));
+    sinon.stub(marketplace, "getTxOptions").returns(Promise.resolve({}));
   });
 
   it("lists for ETH", async () => {

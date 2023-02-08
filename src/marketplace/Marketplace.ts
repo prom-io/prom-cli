@@ -69,11 +69,7 @@ export class Marketplace {
     await this.marketplace.estimateGas.multicallList(...args);
 
     return this.marketplace.multicallList(...args, {
-      ...(await this.getGasOptions()),
-      type:
-        (await this.marketplace.provider.getNetwork()).chainId === ChainId.BSC
-          ? 1
-          : 2,
+      ...(await this.getTxOptions()),
     });
   }
 
@@ -86,11 +82,7 @@ export class Marketplace {
     await this.marketplace.estimateGas.multicallCancel(...args);
 
     return this.marketplace.multicallCancel(...args, {
-      ...(await this.getGasOptions()),
-      type:
-        (await this.marketplace.provider.getNetwork()).chainId === ChainId.BSC
-          ? 1
-          : 2,
+      ...(await this.getTxOptions()),
     });
   }
 
@@ -134,7 +126,7 @@ export class Marketplace {
     return ethers.utils.parseUnits(price, decimals);
   }
 
-  async getGasOptions(): Promise<ethers.Overrides> {
+  async getTxOptions(): Promise<ethers.Overrides> {
     const chainId = (await this.marketplace.provider.getNetwork()).chainId;
 
     try {
@@ -174,6 +166,7 @@ export class Marketplace {
         }
 
         return {
+          type: 2,
           maxFeePerGas: ethers.utils.parseUnits(
             speed.maxFeePerGas.toString(),
             "gwei"
@@ -189,7 +182,7 @@ export class Marketplace {
       logger.debug(e);
       logger.warn("Retrying in 10 seconds...");
       await sleep(10000);
-      return this.getGasOptions();
+      return this.getTxOptions();
     }
   }
 }

@@ -35,7 +35,7 @@ describe("cli | approveCollection", () => {
       erc721contract.address,
       {
         address: ethers.constants.AddressZero,
-        getGasOptions: () => Promise.resolve({}),
+        getTxOptions: () => Promise.resolve({}),
       } as Marketplace,
       wallet
     );
@@ -50,7 +50,7 @@ describe("cli | approveCollection", () => {
       erc721contract.address,
       {
         address: ethers.constants.AddressZero,
-        getGasOptions: () => Promise.resolve({}),
+        getTxOptions: () => Promise.resolve({}),
       } as Marketplace,
       wallet
     );
