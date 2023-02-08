@@ -12,50 +12,54 @@ export type UserInput = {
   price: string;
 };
 
-const commonQuestions: DistinctQuestion[] = [
-  {
-    type: "password",
-    name: "privateKey",
-    message: "Please provide your wallet private key",
-    validate: input => {
-      try {
-        new ethers.Wallet(input);
+export const privateKeyQuestion: DistinctQuestion = {
+  type: "password",
+  name: "privateKey",
+  message: "Please provide your wallet private key",
+  validate: input => {
+    try {
+      new ethers.Wallet(input);
 
-        return true;
-      } catch {
-        return false;
-      }
-    },
+      return true;
+    } catch {
+      return false;
+    }
   },
+};
+
+export const chainIdQuestion: DistinctQuestion = {
+  name: "chainId",
+  message: "Choose Network",
+  type: "list",
+  choices: [
+    {
+      name: "Ethereum (1)",
+      value: ChainId.Ethereum,
+    },
+    {
+      name: "Polygon (137)",
+      value: ChainId.Polygon,
+    },
+    {
+      name: "BSC (56)",
+      value: ChainId.BSC,
+    },
+    {
+      name: "BSC Testnet",
+      value: 97,
+    },
+    { name: "Other", value: "other" },
+  ],
+};
+
+const commonQuestions: DistinctQuestion[] = [
+  privateKeyQuestion,
   {
     name: "collection",
     message: "NFT Collection address",
     type: "input",
   },
-  {
-    name: "chainId",
-    message: "Choose Network",
-    type: "list",
-    choices: [
-      {
-        name: "Ethereum (1)",
-        value: ChainId.Ethereum,
-      },
-      {
-        name: "Polygon (137)",
-        value: ChainId.Polygon,
-      },
-      {
-        name: "BSC (56)",
-        value: ChainId.BSC,
-      },
-      {
-        name: "BSC Testnet",
-        value: 97,
-      },
-      { name: "Other", value: "other" },
-    ],
-  },
+  chainIdQuestion,
   {
     name: "customChainId",
     message: "Please enter chain id",

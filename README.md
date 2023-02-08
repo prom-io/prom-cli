@@ -62,3 +62,29 @@ If you see message `Total NFTs to list: 0` however you're sure that there are NF
 ```
 npx @prom-io/cli clear-cache
 ```
+
+### Development
+
+#### Install dependencies
+
+```
+npm install
+```
+
+#### Build
+
+```
+npm run build
+```
+
+#### Run
+
+```
+npm run start
+```
+
+#### Test
+
+```
+npm run test
+```

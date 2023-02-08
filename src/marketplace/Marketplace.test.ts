@@ -8,11 +8,19 @@ import {
   MockProvider,
 } from "ethereum-waffle";
 import { ethers } from "ethers";
+import sinon from "sinon";
 
 describe("marketplace | Marketplace", () => {
   let marketplace: Marketplace;
   let marketplaceContract: MockContract;
-  const [wallet] = new MockProvider().getWallets();
+  const provider = new MockProvider({
+    ganacheOptions: {
+      chain: {
+        hardfork: "arrowGlacier",
+      },
+    },
+  });
+  const [wallet] = provider.getWallets();
   const assets: Asset[] = [
     {
       nftAddress: ethers.constants.AddressZero,
@@ -36,6 +44,7 @@ describe("marketplace | Marketplace", () => {
     await marketplaceContract.mock.multicallList.returns();
 
     marketplace = new Marketplace(marketplaceContract.address, wallet);
+    sinon.stub(marketplace, "getTxOptions").returns(Promise.resolve({}));
   });
 
   it("lists for ETH", async () => {

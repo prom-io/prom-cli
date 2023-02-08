@@ -2,7 +2,7 @@ import { ChainId } from "@/config/ChainId";
 import { ethers } from "ethers";
 
 export const polygonProvider = new ethers.providers.JsonRpcProvider(
-  "https://polygon-mainnet.g.alchemy.com/v2/ThLPkDxP_qzFf6__bC3aiTtbclCoUZuV",
+  "https://rpc.ankr.com/polygon",
   ChainId.Polygon
 );
 
